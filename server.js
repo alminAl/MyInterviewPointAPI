@@ -12,7 +12,7 @@ app.use(express.json());
 
 // route
 app.get("/", (req, res) => {
-  res.status(200).json({ api: "Life Spring API 🌳" });
+  res.status(200).json({ api: "My Interview Point API 👨‍💼👩‍💼" });
 });
 
 // connect to DB
