@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const userRoutes = require("./routes/userRoutes")
 
 // express app
 const app = express();
@@ -14,6 +15,11 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.status(200).json({ api: "My Interview Point API 👨‍💼👩‍💼" });
 });
+
+app.use("/api/auth/",userRoutes)
+
+
+
 
 // connect to DB
 mongoose
