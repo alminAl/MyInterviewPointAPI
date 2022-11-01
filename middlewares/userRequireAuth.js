@@ -2,6 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/userModel");
 
+
 const userRequireAuth = async (req, res, next) => {
   const { authorization } = req.headers;
 

@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes")
+const userProfileRoutes = require("./routes/userProfileRoutes");
 
 // express app
 const app = express();
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth/",userRoutes)
-
+app.use("/api/user/profile", userProfileRoutes);
 
 
 

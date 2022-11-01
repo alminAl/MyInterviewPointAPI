@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
-const userModel = require("../models/userModel");
+const UserModel = require("../models/userModel");
 
 
 // create token
@@ -28,7 +28,7 @@ const signupUSer = async (req, res) => {
     req.body;
 
   try {
-    const user = await userModel.signup(
+    const user = await UserModel.signup(
       email,
       password,
       name,
@@ -50,7 +50,7 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await userModel.login(email, password);
+    const user = await UserModel.login(email, password);
 
     const token = createToken(user._id);
     res.status(200).json({ email, token });
@@ -69,38 +69,37 @@ const loginUser = async (req, res) => {
 //   }
 // };
 
-// const userProfile = async (req, res) => {
-//   try {
-//     const user_id = req.user;
-//     const userProfile = await UserModel.findById(user_id).select("-password");
-//     res.status(200).json(userProfile);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+const userProfile = async (req, res) => {
+  try {
+    const user_id = req.user;
+    const userProfile = await UserModel.findById(user_id).select("-password");
+    res.status(200).json(userProfile);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 // // update user info
-// const updateUser = async (req, res) => {
-//   const user_id = req.user;
-//   const { email, name, mobile_number, about, profile_image } = req.body;
-//   try {
-//     const user = await UserModel.findOneAndUpdate(
-//       user_id,
-//       {
-//         email,
-//         name,
-//         mobile_number
-       
-//       },
-//       {
-//         returnOriginal: false,
-//       }
-//     ).select("-password");
-//     res.status(200).json(user);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+const updateUser = async (req, res) => {
+  const user_id = req.user;
+  const {  name, mobile_number,  profile_image } = req.body;
+  try {
+    const user = await UserModel.findOneAndUpdate(
+      user_id,
+      {
+        name,
+        mobile_number,
+        profile_image    
+      },
+      {
+        returnOriginal: false,
+      }
+    ).select("-password");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 // change password
 const changePassword = async (req, res) => {
@@ -110,7 +109,7 @@ const changePassword = async (req, res) => {
 
     const newPassword = await securePassword(password);
 
-    const user = await userModel.findOneAndUpdate(user_id, {
+    const user = await UserModel.findOneAndUpdate(user_id, {
       password: newPassword,
     });
     res.status(200).json({ message: "Password change successfully" });
@@ -123,5 +122,8 @@ const changePassword = async (req, res) => {
 module.exports = {
   signupUSer,
   loginUser,
+  changePassword,
+  updateUser,
+  userProfile
  
 };
