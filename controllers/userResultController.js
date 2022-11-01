@@ -2,7 +2,7 @@ const userResultModel = require("../models/userResultModel");
 
 
 
-// crate enroll
+// crate result
 const createResult = async (req, res) => {
     const { result_Id, title, score } = req.body;
 
@@ -21,6 +21,19 @@ const createResult = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 }
+
+
+// all user result
+const getAllResults = async (req, res) => {
+    try {
+        const userResult = await userResultModel.find({});
+        res.status(200).json({
+            userResult
+        });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
 
 
 
@@ -47,5 +60,6 @@ const getUserResult = async (req, res) => {
 
 module.exports = {
     createResult,
-    getUserResult
+    getUserResult,
+    getAllResults
 };
