@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes")
 const userProfileRoutes = require("./routes/userProfileRoutes");
-
+const userResultRoutes = require("./routes/userResultRoutes");
 // express app
 const app = express();
 
@@ -17,8 +17,9 @@ app.get("/", (req, res) => {
   res.status(200).json({ api: "My Interview Point API 👨‍💼👩‍💼" });
 });
 
-app.use("/api/auth/",userRoutes)
+app.use("/api/auth/", userRoutes)
 app.use("/api/user/profile", userProfileRoutes);
+app.use("/api/result", userResultRoutes);
 
 
 
