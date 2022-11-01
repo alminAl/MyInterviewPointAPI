@@ -15,9 +15,7 @@ const createResult = async (req, res) => {
             title,
             score
         })
-        res.status(200).json({
-            userResult
-        })
+        res.status(200).json(userResult)
 
     } catch (error) {
         res.status(400).json({ error: error.message });

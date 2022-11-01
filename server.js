@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ api: "My Interview Point API 👨‍💼👩‍💼" });
 });
 
-app.use("/api/auth/", userRoutes)
+app.use("/api/auth", userRoutes)
 app.use("/api/user/profile", userProfileRoutes);
 app.use("/api/result", userResultRoutes);
 

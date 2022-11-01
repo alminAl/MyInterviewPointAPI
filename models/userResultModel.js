@@ -6,11 +6,6 @@ const userResultSchema = new Schema({
     user_id: {
         type: String
     },
-    result_Id: {
-        type: String,
-        require: true,
-        unique: true
-    },
     title: {
         type: String,
         require: true
