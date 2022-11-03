@@ -19,6 +19,10 @@ const userSchema = new Schema({
     mobile_number: {
         type: String,
         require: true
+    },
+    profile_image: {
+        type: String,
+        require: false
     }
     
 });
@@ -28,7 +32,8 @@ userSchema.statics.signup = async function (
     email,
     password,
     name,
-    mobile_number
+    mobile_number,
+    profile_image
     
 ) {
     const exists = await this.findOne({ email });
@@ -48,6 +53,7 @@ userSchema.statics.signup = async function (
         password: hash,
         name,
         mobile_number,
+        profile_image
         
     });
 

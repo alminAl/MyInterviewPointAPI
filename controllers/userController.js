@@ -3,7 +3,6 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/userModel");
 
-
 // create token
 const createToken = (_id) => {
   return jwt.sign({ _id }, `${process.env.ACCESS_TOKEN_SECRET}`, {
@@ -24,7 +23,7 @@ const securePassword = async (password) => {
 // signup controller
 const signupUSer = async (req, res) => {
   // get info from body/user
-  const { email, password, name, mobile_number} =
+  const { email, password, name, mobile_number,  profile_image } =
     req.body;
 
   try {
@@ -33,16 +32,15 @@ const signupUSer = async (req, res) => {
       password,
       name,
       mobile_number,
-      
+    
+      profile_image
     );
-// const token = createToken(user._id);
- console.log(user);
-    res.status(200).json({ user});
+    const token = createToken(user._id);
+
+    res.status(200).json({ email, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
-    console.log(error.message);
   }
-
 };
 
 // login controller
@@ -59,15 +57,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-// get all user
-// const allUser = async (req, res) => {
-//   try {
-//     const users = await UserModel.find({});
-//     res.status(200).json({ users, message: "These are all users" });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 
 const userProfile = async (req, res) => {
   try {
@@ -79,17 +68,18 @@ const userProfile = async (req, res) => {
   }
 };
 
-// // update user info
+// update user info
 const updateUser = async (req, res) => {
   const user_id = req.user;
-  const {  name, mobile_number,  profile_image } = req.body;
+  const { email, name, mobile_number,  profile_image } = req.body;
   try {
     const user = await UserModel.findOneAndUpdate(
       user_id,
       {
+
         name,
         mobile_number,
-        profile_image    
+        profile_image,
       },
       {
         returnOriginal: false,
@@ -122,8 +112,7 @@ const changePassword = async (req, res) => {
 module.exports = {
   signupUSer,
   loginUser,
-  changePassword,
+  userProfile,
   updateUser,
-  userProfile
- 
+  changePassword,
 };
